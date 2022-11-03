@@ -93,6 +93,19 @@ def ask_for_result_number():
     return u_int
 # Leon Holuch & Jonas Hillen - end #
 
+# Leon Holuch - begin #
+def ask_for_price():
+    u_input = input('\nWie teuer sollen die Wohnungen maximal sein?\n')
+
+    try:
+        u_int = int(u_input)
+    except ValueError:
+        print('Leider ist die Eingabe von "' + u_input + '"keine Zahl!\nWir zeigen dir alle Ergebnisse!\n')
+        u_int = 1
+
+    return u_int
+# Leon Holuch - end #
+
 # Jonas Hillen - begin #
 def ask_for_nights():
     u_input = input('\nWie viele Nächte möchtest du bleiben?\n')

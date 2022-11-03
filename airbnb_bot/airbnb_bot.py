@@ -101,7 +101,7 @@ def ask_for_price():
         u_int = int(u_input)
     except ValueError:
         print('Leider ist die Eingabe von "' + u_input + '"keine Zahl!\nWir zeigen dir alle Ergebnisse!\n')
-        u_int = 1
+        u_int = 999999
 
     return u_int
 # Leon Holuch - end #
@@ -152,7 +152,10 @@ def airbnb_bot(sql_file, top_n):
             print('\nEntschuldigung, das habe ich leider nicht verstanden...\nVersuchen wir es nochmal!\n')
         else:
             break
-
+# Leon Holuch - begin #
+    # ask for maximum price #
+    price_m = ask_for_price()
+# Leon Holuch - end #
     # ask how many results should be displayed
     top_n = ask_for_result_number()
 # Leon Holuch & Jonas Hillen - end #
@@ -179,6 +182,11 @@ def airbnb_bot(sql_file, top_n):
     #############################################################################
     # STEP 4: print information about the first top_n flats in the results list #
     #############################################################################
+# Leon Holuch - begin #
+    # filter results #
+    results = [p for p in results if p[2] <= price_m]
+    print('Ich habe {} Wohnungen mit dem Preis{} oder niedriger in {} gefunden.\n'.format(
+        len(results), price_m ,location))
 
 # Jonas Hillen - begin #
     # sort results

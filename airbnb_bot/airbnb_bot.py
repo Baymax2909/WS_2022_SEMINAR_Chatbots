@@ -93,6 +93,18 @@ def ask_for_result_number():
     return u_int
 # Leon Holuch & Jonas Hillen - end #
 
+# Jonas Hillen - begin #
+def ask_for_nights():
+    u_input = input('\nWie viele Nächte möchtest du bleiben?\n')
+
+    try:
+        u_int = int(u_input)
+    except ValueError:
+        print('Leider ist die Eingabe von "' + u_input + '" keine Zahl!\nWir zeigen alle Ergebnisse!\n')
+        u_int = 1
+
+    return u_int
+# Jonas Hillen - end #
 
 def airbnb_bot(sql_file, top_n):
     """
@@ -132,12 +144,15 @@ def airbnb_bot(sql_file, top_n):
     top_n = ask_for_result_number()
 # Leon Holuch & Jonas Hillen - end #
 
+    # ask how many nights the guest want to stay
+    nights_n = ask_for_nights()
+
     #####################################################################
     # STEP 3: query sqlite file for flats in the area given by the user #
     #####################################################################
 
     # get matches from csv file
-    columns = ['name', 'neighbourhood', 'price']
+    columns = ['name', 'neighbourhood', 'price', 'minimum_nights']
     results = query_sql(
         key='neighbourhood_group', value=location,
         columns=columns, sql_file=sql_file
@@ -152,7 +167,10 @@ def airbnb_bot(sql_file, top_n):
     # STEP 4: print information about the first top_n flats in the results list #
     #############################################################################
 
-    # NLG- Sprachgenerierung
+# Jonas Hillen - begin #
+    # sort results
+    results = [r for r in results if r[3] <= nights_n]
+# Jonas Hillen - end #
 
     # return results
     print('Ich habe {} passende Wohnungen in {} gefunden.\n'.format(
@@ -162,9 +180,9 @@ def airbnb_bot(sql_file, top_n):
 
     # print the first top_n entries from the results list
     for r in results[:top_n]:
-        answer = '"{}", {}. Das Apartment kostet {}€.'.format(
+        answer = '"{}", {}. Das Apartment kostet {}€. Du musst mindestens {} Nächte bleiben.'.format(
             # look at the columns list to see what r[0], r[1], r[2] are referring to!
-            r[0], r[1], r[2]
+            r[0], r[1], r[2], r[3]
         )
         print(answer)
 

@@ -186,7 +186,7 @@ def airbnb_bot(sql_file, top_n):
     # filter results #
     results = [p for p in results if p[2] <= price_m]
     print('Ich habe {} Wohnungen mit dem Preis{} oder niedriger in {} gefunden.\n'.format(
-        len(results), price_m ,location))
+        len(results), price_m, location))
 
 # Jonas Hillen - begin #
     # sort results

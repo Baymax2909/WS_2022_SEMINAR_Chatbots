@@ -95,7 +95,7 @@ def ask_for_result_number():
 
 # Leon Holuch - begin #
 def ask_for_price():
-    u_input = input('\nWie teuer sollen die Wohnungen maximal sein?\n')
+    u_input = input('\nWie teuer sollen die Wohnungen maximal sein?\n(also in Euro)\n')
 
     try:
         u_int = int(u_input)
@@ -185,7 +185,7 @@ def airbnb_bot(sql_file, top_n):
 # Leon Holuch - begin #
     # filter results #
     results = [p for p in results if p[2] <= price_m]
-    print('Ich habe {} Wohnungen mit dem Preis{} oder niedriger in {} gefunden.\n'.format(
+    print('Ich habe {} Wohnungen mit dem Preis{} Euro oder niedriger in {} gefunden.\n'.format(
         len(results), price_m, location))
 
 # Jonas Hillen - begin #

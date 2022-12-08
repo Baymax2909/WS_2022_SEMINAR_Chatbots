@@ -1,6 +1,7 @@
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
-
+from sklearn.feature_extraction.text import CountVectorizer as CoVe
+import random
 
 def read_data(dialog_file, dialog_act_file):
     """
@@ -29,9 +30,14 @@ def read_data(dialog_file, dialog_act_file):
 
     return utterance, act
 
+vectorizer = CoVe()
+X_test, y_test = read_data('test/dialogues_test.txt', 'test/dialogues_act_test.txt')
+X_train, y_train = read_data('train/dialogues_train.txt','train/dialogues_act_train.txt')
+X_val, y_val = read_data('validation/dialogues_validation.txt', 'validation/dialogues_act_validation.txt')
+X_train = vectorizer.fit_transform(X_train)
+X_test = vectorizer.transform(X_test)
 
-utterances, acts = read_data('./test/dialogues_test.txt', './test/dialogues_act_test.txt')
 
 mnb = MultinomialNB()
 
-mnb.fit
+mnb.fit(X_train, y_train)
